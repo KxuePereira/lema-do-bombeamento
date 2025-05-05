@@ -1,21 +1,43 @@
-🚀 Lema do Bombeamento - Linguagens Formais
-🎯 Objetivo do Projeto
-O Lema do Bombeamento é uma ferramenta fundamental na teoria de linguagens formais usada para provar que certas linguagens não são regulares. Este projeto tem como objetivo implementar e testar esse lema em Python, de forma interativa, permitindo que os usuários verifiquem se uma linguagem definida é regular ou não.
+🔥 Lema do Bombeamento - Linguagens Formais 🔥
+📝 Sobre o Projeto
+O projeto implementa e testa o Lema do Bombeamento para linguagens formais. Esse lema é uma ferramenta teórica usada na área de Teoria de Linguagens e Autômatos para provar que determinadas linguagens não são regulares.
 
-Como funciona?
-O código recebe como entrada:
-
-Uma função que define a linguagem.
-
-Um valor de bombeamento 
-𝑝
-p.
-
-Uma cadeia 
+📚 O que é o Lema do Bombeamento?
+O Lema do Bombeamento afirma que, para linguagens regulares, qualquer cadeia suficientemente longa pode ser dividida em três partes, 
 𝑤
-w da linguagem 
-𝐿
-L (onde 
+=
+𝑥
+𝑦
+𝑧
+w=xyz, onde:
+
+𝑥
+x pode ser repetido 
+𝑘
+k vezes, para 
+𝑘
+≥
+0
+k≥0, sem que a cadeia saia da linguagem.
+
+𝑦
+y é a parte que deve ser repetida (bombeada), e não pode estar vazia.
+
+𝑧
+z é a parte da cadeia que não será modificada.
+
+Com isso, o lema fornece uma forma de verificar se uma linguagem é regular: se não for possível dividir uma cadeia dessa forma e ainda manter a cadeia dentro da linguagem após bombear, a linguagem não é regular.
+
+🎯 Objetivo
+Este projeto visa:
+
+Implementar o Lema do Bombeamento em Python para testar a regularidade de uma linguagem.
+
+Permitir a entrada de uma linguagem formal (definida por uma função), um valor de bombeamento 
+𝑝
+p, e uma cadeia 
+𝑤
+w (onde 
 ∣
 𝑤
 ∣
@@ -23,117 +45,21 @@ L (onde
 𝑝
 ∣w∣≥p).
 
-O código simula todas as possíveis divisões de 
-𝑤
-=
-𝑥
+Realizar a simulação do lema e verificar se as palavras geradas pelo bombeamento de 
 𝑦
-𝑧
-w=xyz e aplica o bombeamento de 
-𝑦
-y (para 
-𝑖
-=
-0
-,
-1
-,
-2
-,
-…
-i=0,1,2,…).
+y ainda pertencem à linguagem.
 
-Se qualquer cadeia gerada pelo bombeamento não pertencer à linguagem, o lema é violado, indicando que a linguagem não é regular.
+Indicar se o lema foi violado (indicando que a linguagem não é regular).
 
-🧰 Estrutura do Projeto
-main.py: Código principal que implementa o Lema do Bombeamento.
+🧑‍💻 Estrutura do Projeto
+main.py: O código principal que implementa a lógica do Lema do Bombeamento.
 
 README.md: Este arquivo de documentação.
 
-relatorio.pdf: Relatório final com explicações detalhadas e análise do lema.
+🔧 Funcionalidade da Linguagem
+Este projeto pode ser adaptado para testar diferentes linguagens. O código atualmente implementa um exemplo simples de linguagem:
 
-saida_terminal.png: Imagem mostrando a saída do terminal durante a execução de um exemplo de teste.
-
-⚡ Como Rodar o Código
-Pré-Requisitos
-Python 3.x ou superior
-
-Passos para Execução
-Clone o repositório para sua máquina local:
-
-bash
-Copiar
-Editar
-git clone https://github.com/seu-usuario/lema-do-bombeamento.git
-cd lema-do-bombeamento
-Configuração de Entrada: Abra o arquivo main.py e defina os seguintes parâmetros:
-
-A cadeia 
-𝑤
-w (ex: "aaaabbbb")
-
-O valor de bombeamento 
-𝑝
-p (ex: 4)
-
-A função que verifica a linguagem (ex: pertence_linguagem)
-
-Exemplo de configuração no arquivo:
-
-python
-Copiar
-Editar
-w = "aaaabbbb"  # Exemplo de cadeia na linguagem
-p = 4           # Valor do bombeamento
-Execute o Código:
-
-bash
-Copiar
-Editar
-python main.py
-O código vai realizar o teste do Lema do Bombeamento e mostrar a saída no terminal, indicando se a linguagem é regular ou não.
-
-🔍 Exemplo de Saída
-Dado o exemplo 
-𝑤
-=
-"
-𝑎
-𝑎
-𝑎
-𝑎
-𝑏
-𝑏
-𝑏
-𝑏
-"
-w="aaaabbbb" e 
-𝑝
-=
-4
-p=4, o programa vai tentar dividir a palavra em diferentes combinações de 
-𝑥
-x, 
-𝑦
-y, e 
-𝑧
-z, e então vai "bombeá-la" para diferentes valores de 
-𝑖
-i. A saída será algo como:
-
-bash
-Copiar
-Editar
-Testando palavra: 'aaaabbbb' com p = 4
-Divisão: x = 'a', y = 'a', z = 'aabbbb'
-  i = 0: 'abbbb' → Não pertence
-❌ Quebrou o lema → Linguagem NÃO é regular.
-Saída Esperada
-Se a linguagem for regular, o programa confirmará que o lema não foi violado. Caso contrário, o código indicará uma violação e que a linguagem não é regular.
-
-⚙️ Definições de Linguagem
-Este projeto permite a definição de linguagens personalizadas para testar o lema do bombeamento. O código atualmente implementa um exemplo de linguagem simples:
-
+Linguagem: 
 𝐿
 =
 {
@@ -152,45 +78,34 @@ n
 n
  ∣n≥0}
 
-Você pode adicionar novas funções que definem linguagens e testar o lema com diferentes palavras.
+Você pode facilmente modificar a função de linguagem no código e adicionar novas linguagens para verificar se elas são regulares ou não, conforme o Lema do Bombeamento.
 
-📝 Relatório do Projeto
-Para mais detalhes sobre o funcionamento do lema e os testes realizados, consulte o relatório PDF no arquivo relatorio.pdf.
+💡 Como Contribuir
+Se você deseja contribuir para o projeto, siga os seguintes passos:
 
-Diagrama de Funcionamento
+Faça um fork deste repositório.
 
-Exemplo de diagrama explicativo do processo do Lema do Bombeamento
-
-🔧 Contribuindo
-Sinta-se à vontade para contribuir! Se você tem sugestões de melhorias ou deseja adicionar novas funcionalidades, basta fazer um Fork do repositório e abrir um Pull Request.
-
-Passos para Contribuir:
-Faça um fork deste repositório
-
-Crie um branch para a sua feature:
+Crie um branch para a nova funcionalidade:
 
 bash
 Copiar
 Editar
 git checkout -b minha-nova-feature
-Adicione suas modificações:
+Faça alterações e commit:
 
 bash
 Copiar
 Editar
 git add .
 git commit -m "Adiciona nova funcionalidade"
-Faça o push para o seu repositório:
+Envie para o seu repositório:
 
 bash
 Copiar
 Editar
 git push origin minha-nova-feature
-Abra um Pull Request!
+Abra um Pull Request.
 
-📄 Licença
-Este projeto está licenciado sob a licença MIT - consulte o arquivo LICENSE para mais detalhes.
-
-🏅 Feedback e Discussões
-Se você tiver dúvidas ou sugestões sobre o projeto, fique à vontade para abrir uma Issue ou discutir nos comentários. A colaboração é bem-vinda!
+🤝 Contato
+Se tiver dúvidas ou sugestões, não hesite em entrar em contato ou abrir uma issue neste repositório. Ficarei feliz em ajudar!
 
