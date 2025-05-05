@@ -1,49 +1,196 @@
-Projeto: Teste do Lema do Bombeamento
+🚀 Lema do Bombeamento - Linguagens Formais
+🎯 Objetivo do Projeto
+O Lema do Bombeamento é uma ferramenta fundamental na teoria de linguagens formais usada para provar que certas linguagens não são regulares. Este projeto tem como objetivo implementar e testar esse lema em Python, de forma interativa, permitindo que os usuários verifiquem se uma linguagem definida é regular ou não.
 
-Este projeto em Python aplica o Lema do Bombeamento para verificar se uma linguagem formal é regular. Utiliza uma função que representa a linguagem  e testa uma cadeia conforme as regras do lema.
+Como funciona?
+O código recebe como entrada:
 
-📌 Linguagem Testada
+Uma função que define a linguagem.
 
-L = { aⁿ bᵐ cᵐ | n ≥ 0, m ≥ 0 }A linguagem contém:
+Um valor de bombeamento 
+𝑝
+p.
 
-Um número qualquer de símbolos 'a'
+Uma cadeia 
+𝑤
+w da linguagem 
+𝐿
+L (onde 
+∣
+𝑤
+∣
+≥
+𝑝
+∣w∣≥p).
 
-Seguidos por a mesma quantidade de 'b's e 'c's
+O código simula todas as possíveis divisões de 
+𝑤
+=
+𝑥
+𝑦
+𝑧
+w=xyz e aplica o bombeamento de 
+𝑦
+y (para 
+𝑖
+=
+0
+,
+1
+,
+2
+,
+…
+i=0,1,2,…).
 
-Exemplo de cadeia válida: aaabbbccc
+Se qualquer cadeia gerada pelo bombeamento não pertencer à linguagem, o lema é violado, indicando que a linguagem não é regular.
 
-⚙️ Como Rodar o Código
+🧰 Estrutura do Projeto
+main.py: Código principal que implementa o Lema do Bombeamento.
 
-Certifique-se de ter Python 3 instalado.
+README.md: Este arquivo de documentação.
 
-Execute o script com:
+relatorio.pdf: Relatório final com explicações detalhadas e análise do lema.
 
+saida_terminal.png: Imagem mostrando a saída do terminal durante a execução de um exemplo de teste.
+
+⚡ Como Rodar o Código
+Pré-Requisitos
+Python 3.x ou superior
+
+Passos para Execução
+Clone o repositório para sua máquina local:
+
+bash
+Copiar
+Editar
+git clone https://github.com/seu-usuario/lema-do-bombeamento.git
+cd lema-do-bombeamento
+Configuração de Entrada: Abra o arquivo main.py e defina os seguintes parâmetros:
+
+A cadeia 
+𝑤
+w (ex: "aaaabbbb")
+
+O valor de bombeamento 
+𝑝
+p (ex: 4)
+
+A função que verifica a linguagem (ex: pertence_linguagem)
+
+Exemplo de configuração no arquivo:
+
+python
+Copiar
+Editar
+w = "aaaabbbb"  # Exemplo de cadeia na linguagem
+p = 4           # Valor do bombeamento
+Execute o Código:
+
+bash
+Copiar
+Editar
 python main.py
+O código vai realizar o teste do Lema do Bombeamento e mostrar a saída no terminal, indicando se a linguagem é regular ou não.
 
-📥 Entrada do Programa
+🔍 Exemplo de Saída
+Dado o exemplo 
+𝑤
+=
+"
+𝑎
+𝑎
+𝑎
+𝑎
+𝑏
+𝑏
+𝑏
+𝑏
+"
+w="aaaabbbb" e 
+𝑝
+=
+4
+p=4, o programa vai tentar dividir a palavra em diferentes combinações de 
+𝑥
+x, 
+𝑦
+y, e 
+𝑧
+z, e então vai "bombeá-la" para diferentes valores de 
+𝑖
+i. A saída será algo como:
 
-Função da linguagem: pertence_linguagem_am_bm_cm
+bash
+Copiar
+Editar
+Testando palavra: 'aaaabbbb' com p = 4
+Divisão: x = 'a', y = 'a', z = 'aabbbb'
+  i = 0: 'abbbb' → Não pertence
+❌ Quebrou o lema → Linguagem NÃO é regular.
+Saída Esperada
+Se a linguagem for regular, o programa confirmará que o lema não foi violado. Caso contrário, o código indicará uma violação e que a linguagem não é regular.
 
-Palavra: aaabbbccc
+⚙️ Definições de Linguagem
+Este projeto permite a definição de linguagens personalizadas para testar o lema do bombeamento. O código atualmente implementa um exemplo de linguagem simples:
 
-Valor de bombeamento: p = 5
+𝐿
+=
+{
+𝑎
+𝑛
+𝑏
+𝑛
+∣
+𝑛
+≥
+0
+}
+L={a 
+n
+ b 
+n
+ ∣n≥0}
 
-🔍 Objetivo
+Você pode adicionar novas funções que definem linguagens e testar o lema com diferentes palavras.
 
-O programa simula todas as possíveis divisões da cadeia w = xyz com:
+📝 Relatório do Projeto
+Para mais detalhes sobre o funcionamento do lema e os testes realizados, consulte o relatório PDF no arquivo relatorio.pdf.
 
-|xy| ≤ p
+Diagrama de Funcionamento
 
-|y| ≥ 1
+Exemplo de diagrama explicativo do processo do Lema do Bombeamento
 
-Testa as palavras xy⁰z, xyz, xy²z
+🔧 Contribuindo
+Sinta-se à vontade para contribuir! Se você tem sugestões de melhorias ou deseja adicionar novas funcionalidades, basta fazer um Fork do repositório e abrir um Pull Request.
 
-Caso alguma dessas palavras não pertença à linguagem, isso mostra que a linguagem não é regular.
+Passos para Contribuir:
+Faça um fork deste repositório
 
-✅ Resultado Esperado
+Crie um branch para a sua feature:
 
-Se alguma cadeia gerada pela repetição de y não pertencer à linguagem, o lema é quebrado. Isso indica que a linguagem não pode ser reconhecida por um autômato finito.
+bash
+Copiar
+Editar
+git checkout -b minha-nova-feature
+Adicione suas modificações:
 
-📄 Autor
+bash
+Copiar
+Editar
+git add .
+git commit -m "Adiciona nova funcionalidade"
+Faça o push para o seu repositório:
 
-Projeto acadêmico para disciplina de Linguagens Formais — 2025.
+bash
+Copiar
+Editar
+git push origin minha-nova-feature
+Abra um Pull Request!
+
+📄 Licença
+Este projeto está licenciado sob a licença MIT - consulte o arquivo LICENSE para mais detalhes.
+
+🏅 Feedback e Discussões
+Se você tiver dúvidas ou sugestões sobre o projeto, fique à vontade para abrir uma Issue ou discutir nos comentários. A colaboração é bem-vinda!
+
