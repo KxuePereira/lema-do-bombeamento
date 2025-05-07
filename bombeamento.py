@@ -1,11 +1,21 @@
 class Bombeamento:
     def __init__(self, linguagem_func, p, palavra):
+        """
+        Inicializa o teste de bombeamento com a função da linguagem, valor de p e palavra a ser testada.
+        :param linguagem_func: Função que verifica se uma palavra pertence à linguagem
+        :param p: Valor do lema do bombeamento
+        :param palavra: Palavra a ser testada
+        """
         self.f = linguagem_func
         self.p = p
         self.w = palavra
 
     def testar_divisoes(self):
-        print(f"\n🔍 Testando: '{self.w}', p = {self.p}")
+        """
+        Testa todas as divisões possíveis de acordo com o lema do bombeamento.
+        Exibe o relatório no terminal.
+        """
+        print(f"\n Testando...: '{self.w}', p = {self.p}")
         for i in range(1, self.p + 1):
             for j in range(i + 1, self.p + 1):
                 x = self.w[:i]
@@ -14,20 +24,24 @@ class Bombeamento:
                 if not y:
                     continue
 
-                print(f"Divisão: x='{x}', y='{y}', z='{z}'")
+                print(f"\nDivisão: x='{x}', y='{y}', z='{z}'")
                 for k in [0, 1, 2]:
                     nova = x + y * k + z
                     status = self.f(nova)
                     print(f"  y^{k}: '{nova}' → {'✅' if status else '❌'}")
                     if not status:
-                        print("🚫 Violação detectada: linguagem NÃO é regular.\n")
+                        print(" Irregularidade detectada: linguagem NÃO é regular.\n")
                         return True
-        print("✔️ Nenhuma violação detectada.\n")
+        print(" Nenhuma irregularidade detectada. A linguagem pode ser regular.\n")
         return False
 
 
-# ---------- Função da linguagem L = { a^n b^m c^m }
 def pertence_linguagem_am_bm_cm(w):
+    """
+    Função que verifica se a palavra pertence à linguagem L = {a^n b^m c^m}.
+    :param w: Palavra a ser verificada
+    :return: True se a palavra pertence à linguagem, False caso contrário
+    """
     i = 0
     while i < len(w) and w[i] == 'a':
         i += 1
@@ -40,9 +54,15 @@ def pertence_linguagem_am_bm_cm(w):
     return j - i == k - j and k == len(w)
 
 
-# ---------- Execução ----------
-palavra = "aaabbbccc"
-p = 5
-
-teste = Bombeamento(pertence_linguagem_am_bm_cm, p, palavra)
-teste.testar_divisoes()
+if __name__ == "__main__":
+    print("=== Teste do Lema do Bombeamento ===\n")
+    palavra = input("Digite a palavra a ser testada: ").strip()
+    try:
+        p = int(input("Digite o valor de p (≥ 1): "))
+        if p < 1:
+            raise ValueError
+    except ValueError:
+        print(" Valor inválido. 'p' deve ser um número inteiro maior ou igual a 1.")
+    else:
+        teste = Bombeamento(pertence_linguagem_am_bm_cm, p, palavra)
+        teste.testar_divisoes()
