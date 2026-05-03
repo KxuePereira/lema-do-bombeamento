@@ -52,7 +52,7 @@ y ainda pertencem à linguagem.
 Indicar se o lema foi violado (indicando que a linguagem não é regular).
 
 🧑‍💻 Estrutura do Projeto
-main.py: O código principal que implementa a lógica do Lema do Bombeamento.
+bombeamento.py: O código principal que implementa a lógica do Lema do Bombeamento.
 
 README.md: Este arquivo de documentação.
 

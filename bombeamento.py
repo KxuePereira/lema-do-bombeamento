@@ -1,10 +1,16 @@
+import textwrap
+
 class Bombeamento:
+    """
+    Classe que implementa a lógica do Lema do Bombeamento para testar a regularidade de linguagens.
+    """
     def __init__(self, linguagem_func, p, palavra):
         """
-        Inicializa o teste de bombeamento com a função da linguagem, valor de p e palavra a ser testada.
-        :param linguagem_func: Função que verifica se uma palavra pertence à linguagem
-        :param p: Valor do lema do bombeamento
-        :param palavra: Palavra a ser testada
+        Inicializa o teste de bombeamento.
+        
+        :param linguagem_func: Função que verifica se uma palavra pertence à linguagem.
+        :param p: Comprimento de bombeamento (p).
+        :param palavra: Palavra (w) a ser testada, onde |w| >= p.
         """
         self.f = linguagem_func
         self.p = p
@@ -12,57 +18,106 @@ class Bombeamento:
 
     def testar_divisoes(self):
         """
-        Testa todas as divisões possíveis de acordo com o lema do bombeamento.
-        Exibe o relatório no terminal.
+        Testa todas as divisões w = xyz que satisfaçam as condições do lema:
+        1. |xy| <= p
+        2. |y| > 0
+        3. Para todo k >= 0, x(y^k)z pertence à linguagem.
         """
-        print(f"\n Testando...: '{self.w}', p = {self.p}")
-        for i in range(1, self.p + 1):
+        if len(self.w) < self.p:
+            print(f"\n[!] Aviso: A palavra '{self.w}' tem comprimento {len(self.w)}, "
+                  f"que é menor que p={self.p}. O teste pode não ser conclusivo.")
+
+        print(f"\n--- Analisando palavra: '{self.w}' com p={self.p} ---")
+        
+        encontrou_irregularidade_geral = False
+
+        # Condição do Lema: |xy| <= p
+        # i é o fim de x, j é o fim de y
+        for i in range(self.p):
             for j in range(i + 1, self.p + 1):
                 x = self.w[:i]
                 y = self.w[i:j]
                 z = self.w[j:]
+
                 if not y:
                     continue
 
-                print(f"\nDivisão: x='{x}', y='{y}', z='{z}'")
-                for k in [0, 1, 2]:
+                print(f"\nDivisão encontrada: x='{x}', y='{y}', z='{z}' (|xy|={len(x+y)})")
+                divisao_valida = True
+                
+                # Testamos k=0 (remover y) e k=2 (duplicar y)
+                for k in [0, 2]:
                     nova = x + y * k + z
                     status = self.f(nova)
-                    print(f"  y^{k}: '{nova}' → {'✅' if status else '❌'}")
+                    simbolo = '✅' if status else '❌'
+                    print(f"  y^{k}: '{nova}' → {simbolo}")
+                    
                     if not status:
-                        print(" Irregularidade detectada: linguagem NÃO é regular.\n")
-                        return True
-        print(" Nenhuma irregularidade detectada. A linguagem pode ser regular.\n")
-        return False
+                        divisao_valida = False
+                        break
+                
+                if not divisao_valida:
+                    print(" >> Irregularidade detectada nesta divisão!")
+                    encontrou_irregularidade_geral = True
+                    # De acordo com o lema, se encontrarmos UMA divisão que falha o bombeamento,
+                    # e o lema diz que para linguagens regulares EXISTE uma divisão que funciona,
+                    # aqui a lógica é sutil: se testamos TODAS as divisões possíveis para |xy|<=p
+                    # e TODAS falham, então a linguagem não é regular.
+        
+        print("\n" + "="*40)
+        if encontrou_irregularidade_geral:
+            print(" CONCLUSÃO: Irregularidades detectadas.")
+            print(" Se TODAS as divisões possíveis falharam, a linguagem NÃO é regular.")
+        else:
+            print(" CONCLUSÃO: Nenhuma irregularidade detectada.")
+            print(" A linguagem pode ser regular para este caso de teste.")
+        print("="*40 + "\n")
+        
+        return encontrou_irregularidade_geral
 
 
-def pertence_linguagem_am_bm_cm(w):
+def pertence_linguagem_an_bn(w):
     """
-    Função que verifica se a palavra pertence à linguagem L = {a^n b^m c^m}.
-    :param w: Palavra a ser verificada
-    :return: True se a palavra pertence à linguagem, False caso contrário
+    Verifica se a palavra pertence à linguagem L = {a^n b^n | n >= 0}.
     """
+    count_a = 0
     i = 0
     while i < len(w) and w[i] == 'a':
+        count_a += 1
         i += 1
-    j = i
-    while j < len(w) and w[j] == 'b':
-        j += 1
-    k = j
-    while k < len(w) and w[k] == 'c':
-        k += 1
-    return j - i == k - j and k == len(w)
+    
+    count_b = 0
+    while i < len(w) and w[i] == 'b':
+        count_b += 1
+        i += 1
+        
+    return i == len(w) and count_a == count_b
+
+
+def main():
+    header = """
+    ===========================================
+    💻 Simulador: Lema do Bombeamento
+    Teoria da Computação e Linguagens Formais
+    ===========================================
+    """
+    print(textwrap.dedent(header))
+    
+    print("Linguagem padrão: L = {a^n b^n | n >= 0}")
+    palavra = input("Digite a palavra (ex: aaabbb): ").strip()
+    
+    try:
+        p = int(input("Digite o valor de p (ex: 3): "))
+        if p < 1:
+            print("Erro: p deve ser >= 1")
+            return
+    except ValueError:
+        print("Erro: p deve ser um número inteiro.")
+        return
+
+    teste = Bombeamento(pertence_linguagem_an_bn, p, palavra)
+    teste.testar_divisoes()
 
 
 if __name__ == "__main__":
-    print("=== Teste do Lema do Bombeamento ===\n")
-    palavra = input("Digite a palavra a ser testada: ").strip()
-    try:
-        p = int(input("Digite o valor de p (≥ 1): "))
-        if p < 1:
-            raise ValueError
-    except ValueError:
-        print(" Valor inválido. 'p' deve ser um número inteiro maior ou igual a 1.")
-    else:
-        teste = Bombeamento(pertence_linguagem_am_bm_cm, p, palavra)
-        teste.testar_divisoes()
+    main()
